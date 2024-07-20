@@ -3,6 +3,7 @@ require('dotenv').config()
 const { default: mongoose } = require('mongoose');
 var cors = require('cors')
 const app = express();
+
 const port = 8000; // Define your desired port
 
 
@@ -21,13 +22,14 @@ db.once('open',()=>console.log("Connected"))
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express app!');
 });
+
 //User route
 const userRoute=require('./routes/userRoute');
 app.use('/user',userRoute,cors());
 
-
-
-
+//location route
+const locationsRouter = require('./routes/locationRoute');
+app.use('/api/locations', locationsRouter);
 
 
 app.listen(port, () => {

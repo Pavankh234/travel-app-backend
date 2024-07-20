@@ -10,7 +10,7 @@ router.get('/',async(req,res)=>{
     }
     catch(error)
     {
-           res.status(500).json({message:error.message})
+          res.status(500).json({message:error.message})
     }
 })
 
@@ -20,7 +20,6 @@ router.post('/', async(req,res)=>{
             name:req.body.name,
             email:req.body.email,
             image:req.body.image
-
           }
 
           const userRef=await User.findOneAndUpdate(data,data,{
