@@ -77,7 +77,7 @@ router.get('/top', async (req, res) => {
     const locationsWithImages = await Promise.all(
       locations.map(async (location) => {
         // Append "places" to the location name for better image search results
-        const query = `${encodeURIComponent(location.name)} places`;
+        const query = `${encodeURIComponent(location.name)} place`;
 
         const { data } = await axios.get(`https://api.unsplash.com/search/photos?orientation=landscape&query=${query}&client_id=${UNSPLASH_CLIENT_ID}`);
         const imageUrl = data.results[0]?.urls?.regular || location.image;
@@ -88,12 +88,34 @@ router.get('/top', async (req, res) => {
 
         return location;
       })
+
     );
 
     res.json(locationsWithImages);
   } catch (error) {
     console.log("Failed to fetch top locations", error);
     res.status(500).json({ error: 'Failed to fetch top locations' });
+  }
+});
+
+
+router.patch('/:id/stars', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { increment } = req.body;
+
+    const location = await Location.findById(id);
+    if (!location) {
+      return res.status(404).json({ error: 'Location not found' });
+    }
+
+    location.stars += increment;
+    await location.save();
+
+    res.json(location);
+  } catch (error) {
+    console.error('Failed to update star count', error);
+    res.status(500).json({ error: 'Failed to update star count' });
   }
 });
 
