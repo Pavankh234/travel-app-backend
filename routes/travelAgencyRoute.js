@@ -3,6 +3,7 @@ const router = express.Router();
 const TravelAgency = require('../models/TravelAgency');
 const Booking = require('../models/Booking'); // Import the Booking model
 
+
 // Get all travel agencies for a specific location
 router.get('/:location', async (req, res) => {
     try {
