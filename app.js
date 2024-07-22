@@ -35,6 +35,10 @@ app.use('/api/locations', locationsRouter);
 const travelAgencyRoute = require('./routes/travelAgencyRoute');
 app.use('/api/travel-agencies', travelAgencyRoute);
 
+//booking Route
+const bookingRoutes = require('./routes/bookingRoute'); 
+app.use('/api/bookings', bookingRoutes); 
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
